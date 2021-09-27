@@ -33,5 +33,24 @@ describe OysterCard do
         end
     end
 
+    describe "#journey" do
+         it { is_expected.to respond_to :touch_in }
+         it { is_expected.to respond_to :touch_out }
+
+         it "is initially not in a journey" do
+            expect(subject).not_to  be_in_journey
+         end
+
+         it "can touch in" do
+            subject.touch_in
+            expect(subject).to be_in_journey
+         end
+
+         it "can touch out" do
+            subject.touch_out
+            expect(subject).not_to be_in_journey
+         end
+  
+    end
 
 end
