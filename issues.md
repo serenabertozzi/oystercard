@@ -8,3 +8,7 @@ OysterCard
 balance = 0
 top_up(money)
 balance += money
+
+card.deduct(amount)
+balance -= amount
+balance
