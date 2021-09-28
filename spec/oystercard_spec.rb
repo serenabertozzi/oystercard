@@ -39,7 +39,7 @@ describe OysterCard do
 
     it "can touch out" do
       subject.touch_in(station)
-      subject.touch_out
+      subject.touch_out(station)
       expect(subject).not_to be_in_journey
     end
 
@@ -49,8 +49,8 @@ describe OysterCard do
     end
 
     it "can deduct the minimum charge from the balance" do
-      subject.touch_out
-      expect { subject.touch_out }.to change { subject.balance }.by(-1)
+      subject.touch_out(station)
+      expect { subject.touch_out(station) }.to change { subject.balance }.by(-1)
     end
   end
 
@@ -60,4 +60,20 @@ describe OysterCard do
     subject.touch_in(station)
     expect(subject.entry_station).to eq station
   end
+
+  it "stores the exit station" do
+    subject.touch_out(station)
+    expect(subject.exit_station).to eq station
+  end
+
+it 'is an empty list of journeys' do 
+  expect(subject.journeys).to eq ([])
+end
+
+it 'creates a journey' do
+  subject.touch_in("London")
+  subject.touch_out("Glasgow")
+  expect(subject.journeys).to eq([{:entry=>"London", :exit=>"Glasgow"}])
+end
+
 end
