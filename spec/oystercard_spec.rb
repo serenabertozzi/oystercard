@@ -42,13 +42,20 @@ describe OysterCard do
          end
 
          it "can touch in" do
-            subject.touch_in
-            expect(subject).to be_in_journey
+            card = OysterCard.new(90)
+            card.touch_in
+            expect(card).to be_in_journey
          end
 
          it "can touch out" do
-            subject.touch_out
-            expect(subject).not_to be_in_journey
+            card = OysterCard.new(90)
+            card.touch_in
+            card.touch_out
+            expect(card).not_to be_in_journey
+         end
+
+         it "raises an error, if the balance is too low" do
+            expect {subject.touch_in}.to raise_error "Balance is too low"
          end
   
     end
