@@ -14,3 +14,14 @@ balance += money
 MIN_BALANCE = 1
 touch_in 
 fail "Balance is too low" if @balance <= MIN_BALANCE
+
+
+@journey = []
+
+@entry_station = nil
+
+attr_reader :entry_station
+touch_in(station)
+@entry_station = station
+
+[{entry: station, exit: station}, {entry: station, exit: station}], {entry: station, exit: station}]]
