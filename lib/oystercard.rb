@@ -13,13 +13,8 @@ class OysterCard
     @balance += amount
   end
 
-  def deduct(amount)
-    @balance -= amount
-  end
-
   def touch_in(station)
     fail "Balance is too low" if @balance < MIN_BALANCE
-    @journey = true
     @entry_station = station
   end
 
