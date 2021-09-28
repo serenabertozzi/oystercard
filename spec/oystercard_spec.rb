@@ -23,16 +23,6 @@ describe OysterCard do
         end
     end
 
-    describe "#deduct" do
-        it { is_expected.to respond_to(:deduct).with(1).argument}
-
-        it "an amount can be deducted from the balance of the card" do
-            card = OysterCard.new(90)
-            card.deduct(50)
-            expect(card.balance).to(eq(40))
-        end
-    end
-
     describe "#journey" do
          it { is_expected.to respond_to :touch_in }
          it { is_expected.to respond_to :touch_out }
@@ -52,11 +42,19 @@ describe OysterCard do
             card.touch_in
             card.touch_out
             expect(card).not_to be_in_journey
-         end
+            end
 
          it "raises an error, if the balance is too low" do
             expect {subject.touch_in}.to raise_error "Balance is too low"
          end
+
+         it "can deduct the minimum charge from the balance" do
+            card = OysterCard.new(90)
+            card.touch_out
+            # expect(card.balance).to(eq(89))
+            expect{card.touch_out}.to change{card.balance}.by(-1)
+         end
+
   
     end
 
