@@ -1,4 +1,5 @@
 require "oystercard"
+
 describe OysterCard do
   let(:balance) { 80 }
   let(:entry_station) { double :station }
