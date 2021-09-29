@@ -11,14 +11,14 @@ class OysterCard
   end
 
   def top_up(amount)
-    fail "Your balance reached £#{MAX_BALANCE}, it cannot be topped up" if @balance >= MAX_BALANCE
+    fail "Your balance reached £#{MAX_BALANCE}, it cannot be topped up" if (@balance + amount) > MAX_BALANCE
     @balance += amount
   end
 
   def touch_in(station)
     fail "Balance is too low" if @balance < MIN_BALANCE
     @entry_station = station
-    
+
   end
 
   def touch_out(station)
