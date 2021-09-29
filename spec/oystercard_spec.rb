@@ -13,7 +13,7 @@ describe OysterCard do
     it { is_expected.to respond_to(:top_up).with(1).argument }
 
     it "can be topped up" do
-      expect{ subject.top_up(5) }.to change { subject.balance }.by 5
+      expect { subject.top_up(5) }.to change { subject.balance }.by 5
     end
 
     it "raises an error, when trying to top up, but it reached max balance" do
@@ -55,7 +55,6 @@ describe OysterCard do
     end
   end
 
-
   it "stores the entry station" do
     subject.touch_in(entry_station)
     expect(subject.entry_station).to eq entry_station
@@ -66,16 +65,15 @@ describe OysterCard do
     expect(subject.exit_station).to eq exit_station
   end
 
-it 'is an empty list of journeys' do
-  expect(subject.journeys).to eq ([])
-end
+  it "is an empty list of journeys" do
+    expect(subject.journeys).to eq ([])
+  end
 
-it 'creates a journey' do
-  journey = { :entry => entry_station, :exit => exit_station }
-  subject.touch_in(entry_station)
-  subject.touch_out(exit_station)
+  it "creates a journey" do
+    journey = { :entry => entry_station, :exit => exit_station }
+    subject.touch_in(entry_station)
+    subject.touch_out(exit_station)
 
-  expect(subject.journeys).to include(journey)
-end
-
+    expect(subject.journeys).to include(journey)
+  end
 end

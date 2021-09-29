@@ -25,3 +25,15 @@ touch_in(station)
 @entry_station = station
 
 [{entry: station, exit: station}, {entry: station, exit: station}], {entry: station, exit: station}]]
+
+
+
+class Station
+
+attr_reader :station, :zone
+
+  def initialize(station, zone)
+    @station = station
+    @zone = zone
+  end
+end
