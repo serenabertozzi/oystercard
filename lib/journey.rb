@@ -4,19 +4,20 @@ class Journey
   attr_reader :entry_station
 
   def initialize(entry_station = nil)
-    @journey = {}
     @entry_station = entry_station
   end
 
   def complete?
-    !@journey.empty?
+    @exit_station
   end
 
   def fare
-    PENALTY_FARE
+    return PENALTY_FARE unless @exit_station
+    1
   end
 
   def finish(station)
+    @exit_station = station
     self
   end
 end
