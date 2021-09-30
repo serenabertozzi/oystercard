@@ -5,6 +5,7 @@ describe OysterCard do
   let(:entry_station) { double :station }
   let(:exit_station) { double :station }
   subject { OysterCard.new(balance) }
+  let(:journey) { Journey.new(entry_station) }
 
   it "has a balance" do
     expect(subject.balance).to(eq(balance))
@@ -28,13 +29,9 @@ describe OysterCard do
     it { is_expected.to respond_to :touch_in }
     it { is_expected.to respond_to :touch_out }
 
-    it "is initially not in a journey" do
-      expect(subject).not_to be_in_journey
-    end
-
     it "can touch in" do
-      subject.touch_in(entry_station)
-      expect(subject).to be_in_journey
+      result = subject.touch_in(entry_station)
+      expect(result).to be_an_instance_of(Journey)
     end
 
     it "can touch out" do

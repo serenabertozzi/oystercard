@@ -1,3 +1,5 @@
+require 'journey'
+
 class OysterCard
   MAX_BALANCE = 90
   MIN_BALANCE = 1
@@ -18,12 +20,12 @@ class OysterCard
   def touch_in(station)
     fail "Balance is too low" if @balance < MIN_BALANCE
     @entry_station = station
-
+    Journey.new(station)
   end
 
   def touch_out(station)
     deduct(MIN_BALANCE)
-  
+
     @exit_station = station
     create_journey(@entry_station, @exit_station)
     @entry_station = nil
