@@ -1,15 +1,22 @@
 class Journey
   PENALTY_FARE = 6
 
-  def initialize
-    @journey = { exit_station: nil }
+  attr_reader :entry_station
+
+  def initialize(entry_station = nil)
+    @journey = {}
+    @entry_station = entry_station
   end
 
   def complete?
-    @journey[:exit_station]
+    !@journey.empty?
   end
 
   def fare
     PENALTY_FARE
+  end
+
+  def finish(station)
+    self
   end
 end
