@@ -3,6 +3,8 @@ require "journey"
 describe Journey do
   let(:station) { instance_double("Station", :zone => 1) }
 
+  it { is_expected.to respond_to :exit_station }
+
   it "knows if a journey is not complete" do
     expect(subject).not_to be_complete
   end
