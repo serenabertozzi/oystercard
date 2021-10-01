@@ -11,6 +11,10 @@ describe OysterCard do
     expect(subject.balance).to(eq(balance))
   end
 
+  it "is an empty list of journeys" do
+    expect(subject.journeys).to eq ([])
+  end
+
   describe "#top_up" do
     it { is_expected.to respond_to(:top_up).with(1).argument }
 
@@ -25,19 +29,22 @@ describe OysterCard do
     end
   end
 
-  describe "#journey" do
-    it { is_expected.to respond_to :touch_in }
-    it { is_expected.to respond_to :touch_out }
+  it { is_expected.to respond_to :touch_in }
+  it { is_expected.to respond_to :touch_out }
 
-    it "can touch in" do
+  describe "#touch_in" do
+    it "creates a new Journey" do
       result = subject.touch_in(entry_station)
-      expect(result).to be_an_instance_of(Journey)
+
+      expect(result.last).to be_an_instance_of(Journey)
     end
 
-    it "can touch out" do
+    it "stores journey entry station" do
       subject.touch_in(entry_station)
-      subject.touch_out(exit_station)
-      expect(subject).not_to be_in_journey
+
+      journey = subject.journeys.last
+
+      expect(journey.entry_station).to eq entry_station
     end
 
     it "raises an error, if the balance is too low" do
@@ -46,12 +53,21 @@ describe OysterCard do
 
       expect { card.touch_in(entry_station) }.to raise_error "Balance is too low"
     end
+  end
+
+  describe 'touch_out' do
+    it "can touch out" do
+      subject.touch_in(entry_station)
+      subject.touch_out(exit_station)
+      expect(subject).not_to be_in_journey
+    end
 
     it "can deduct the minimum charge from the balance" do
       subject.touch_out(exit_station)
       expect { subject.touch_out(exit_station) }.to change { subject.balance }.by(-1)
     end
   end
+
 
   it "stores the entry station" do
     subject.touch_in(entry_station)
@@ -63,9 +79,7 @@ describe OysterCard do
     expect(subject.exit_station).to eq exit_station
   end
 
-  it "is an empty list of journeys" do
-    expect(subject.journeys).to eq ([])
-  end
+  
 
   it "creates a journey" do
     journey = { :entry => entry_station, :exit => exit_station }
